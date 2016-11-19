@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-red-contrib-telegrambot": "^1.10.0"
+    "node-telegram-bot-api": "^0.24.0"
   }
 }
