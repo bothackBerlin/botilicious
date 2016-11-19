@@ -1,0 +1,87 @@
+[
+    {
+        "id": "94270bef.305ec8",
+        "type": "tab",
+        "label": "Flow 1"
+    },
+    {
+        "id": "27187de5.88f182",
+        "type": "telegram receiver",
+        "z": "94270bef.305ec8",
+        "name": "Companion",
+        "bot": "fc5cdfd5.b23fa",
+        "x": 149.5,
+        "y": 2257,
+        "wires": [
+            [
+                "84a99360.6edea"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "84a99360.6edea",
+        "type": "telegram reply",
+        "z": "94270bef.305ec8",
+        "name": "Companion",
+        "bot": "fc5cdfd5.b23fa",
+        "x": 513.5,
+        "y": 2217,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "da76f3ae.c2d93",
+        "type": "telegram receiver",
+        "z": "94270bef.305ec8",
+        "name": "",
+        "bot": "fc5cdfd5.b23fa",
+        "x": 102.5,
+        "y": 80,
+        "wires": [
+            [
+                "46b5a86d.6ef968"
+            ],
+            [
+                "46b5a86d.6ef968"
+            ]
+        ]
+    },
+    {
+        "id": "51eb0bb9.45e1b4",
+        "type": "telegram sender",
+        "z": "94270bef.305ec8",
+        "name": "",
+        "bot": "fc5cdfd5.b23fa",
+        "x": 545.5,
+        "y": 92,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "46b5a86d.6ef968",
+        "type": "function",
+        "z": "94270bef.305ec8",
+        "name": "",
+        "func": "msg.payload.content = 'You wrote: ' + msg.payload.content;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 316.5,
+        "y": 221,
+        "wires": [
+            [
+                "51eb0bb9.45e1b4"
+            ]
+        ]
+    },
+    {
+        "id": "fc5cdfd5.b23fa",
+        "type": "telegram bot",
+        "z": "",
+        "botname": "BotiliciousCompanionBot",
+        "usernames": "[]",
+        "chatids": "[]"
+    }
+]
