@@ -5,6 +5,14 @@
         "label": "Flow 1"
     },
     {
+        "id": "fc5cdfd5.b23fa",
+        "type": "telegram bot",
+        "z": "",
+        "botname": "BotiliciousCompanionBot",
+        "usernames": "[]",
+        "chatids": "[]"
+    },
+    {
         "id": "27187de5.88f182",
         "type": "telegram receiver",
         "z": "94270bef.305ec8",
@@ -41,10 +49,12 @@
         "y": 80,
         "wires": [
             [
-                "46b5a86d.6ef968"
+                "46b5a86d.6ef968",
+                "4e401c8b.7a6e14"
             ],
             [
-                "46b5a86d.6ef968"
+                "46b5a86d.6ef968",
+                "4e401c8b.7a6e14"
             ]
         ]
     },
@@ -77,11 +87,15 @@
         ]
     },
     {
-        "id": "fc5cdfd5.b23fa",
-        "type": "telegram bot",
-        "z": "",
-        "botname": "BotiliciousCompanionBot",
-        "usernames": "[]",
-        "chatids": "[]"
+        "id": "4e401c8b.7a6e14",
+        "type": "debug",
+        "z": "94270bef.305ec8",
+        "name": "",
+        "active": true,
+        "console": "true",
+        "complete": "payload",
+        "x": 316.5,
+        "y": 317,
+        "wires": []
     }
 ]
