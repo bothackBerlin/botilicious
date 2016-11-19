@@ -35,16 +35,14 @@ bot.onText(/.*/, function (req, text) {
     const intent = parsed.entities.intent[0].value;
     const intentConfidence = parsed.entities.intent[0].confidence;
 
-
     switch(intent) {
       case 'find a job':
         return sendMessage(bot, getState(req), 'So you want to work at us?');
-      if (false) {
-        return inviteForInterview(bot, getState(req));
-      } else {
+
+      default:
         return didNotUnderstand(bot, getState(req));
-      }
     }
+
   }).catch((error) => {
     console.error(error);
     return unknownError(bot, getState(req));

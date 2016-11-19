@@ -9,7 +9,7 @@ export const parseMessage = (message) => {
   return new Promise((resolve, reject) => {
     client.message(message, {})
       .then((data) => {
-        console.log('parsed:', parsed);
+        console.log('parsed:', data);
         resolve(data);
       })
       .catch(reject);
