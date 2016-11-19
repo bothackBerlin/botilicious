@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-telegram-bot-api": "^0.24.0"
+    "node-telegram-bot-api": "^0.24.0",
+    "node-wit": "^4.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
