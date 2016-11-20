@@ -1,4 +1,4 @@
-export defaultNextStateOptions = () => {
+export const defaultNextStateOptions = () => {
   const replyKeyboardRemove = {
     hide_keyboard: true
   };
