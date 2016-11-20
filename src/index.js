@@ -4,6 +4,7 @@ import { sendMessage } from './actions/sendMessage';
 import { askExperienceLevel } from './actions/askExperienceLevel';
 import { askBusinessSectorOne, askBusinessSectorTwo } from './actions/askBusinessSector';
 import { askIndividualJobs } from './actions/askIndividualJobs';
+import { callExit } from './actions/callExit';
 import { exit } from './actions/exit';
 
 import { speechless } from './actions/speechless';
@@ -79,7 +80,7 @@ bot.onText(/.*/, function (req, text) {
 
       case 'yes':
 
-        return speechless(bot, req);
+        return callExit(bot, req);
 
       case 'no':
 
