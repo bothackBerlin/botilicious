@@ -3,6 +3,8 @@ const TelegramBot = require('node-telegram-bot-api');
 import { sendMessage } from './actions/sendMessage';
 import { askExperienceLevel } from './actions/askExperienceLevel';
 import { askBusinessSectorOne, askBusinessSectorTwo } from './actions/askBusinessSector';
+import { askIndividualJobs } from './actions/askIndividualJobs';
+import { exit } from './actions/exit';
 
 import { speechless } from './actions/speechless';
 import { didNotUnderstand } from './actions/didNotUnderstand';
@@ -25,8 +27,9 @@ bot.onText(/.*/, function (req, text) {
     return sendMessage(bot, getState(bot, req), JSON.stringify(getState(bot, req), null, '\t'));
   }
   if (text == "/reset") {
-    resetState(req);
-    return sendMessage(bot, getState(bot, req), "State has been reset!");
+    const options = defaultNextStateOptions();
+    resetState(bot, req);
+    return sendMessage(bot, getState(bot, req), "State has been reset!", options);
   }
   parseMessage(text).then((parsed) => {
     if (!parsed.entities.intent || !parsed.entities.intent.length) {
@@ -63,7 +66,7 @@ bot.onText(/.*/, function (req, text) {
 
       case 'more_information':
         if (getState(bot, req).page == 2) {
-          return speechless(bot, req);
+          return askIndividualJobs(bot, req);
         }
         getState(bot, req).page = 2;
 
@@ -73,6 +76,14 @@ bot.onText(/.*/, function (req, text) {
         getState(bot, req).page = 1;
 
         return askBusinessSectorOne(bot, req);
+
+      case 'yes':
+
+        return speechless(bot, req);
+
+      case 'no':
+
+        return exit(bot, req);
 
       default:
         return didNotUnderstand(bot, getState(bot, req));
