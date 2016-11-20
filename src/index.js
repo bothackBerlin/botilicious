@@ -9,7 +9,7 @@ import { askExperienceLevel } from './actions/askExperienceLevel';
 import { askIndividualJobs } from './actions/askIndividualJobs';
 import { askInterestFreetext } from './actions/askInterestFreetext';
 import { askQualifications } from './actions/askQualifications';
-import { askResults } from './actions/askResults';
+import { askResults, handleYes as handleResultsYes, handleNo as handleResultsNo } from './actions/askResults';
 import { askStartDate } from './actions/askStartDate';
 import { askSurroundings } from './actions/askSurroundings';
 import { callExit } from './actions/callExit';
@@ -69,7 +69,7 @@ const handleMock = (bot, req) => {
     sendMessage(bot, getState(bot, req), "Let me see if I can find something for you. Just a sec!", options)
     sendChatAction(bot, getState(bot, req), "typing", options);
     const options = defaultNextStateOptions();
-    setTimeout(() => sendMessage(bot, getState(bot, req), "Great! We're almost done!", options), 5000);
+    setTimeout(() => askResults(bot, req), 5000);
     return false;
   }
   return true;
@@ -139,10 +139,16 @@ bot.onText(/.*/, function (req, text) {
         return askBusinessSectorOne(bot, req);
 
       case 'yes':
+        if (getState(bot, req).last_question == "results") {
+          return handleResultsYes(bot, req);
+        }
 
         return callExit(bot, req);
 
       case 'no':
+        if (getState(bot, req).last_question == "results") {
+          return handleResultsNo(bot, req);
+        }
 
         return exit(bot, req);
 
