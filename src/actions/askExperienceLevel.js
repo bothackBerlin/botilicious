@@ -9,6 +9,8 @@ export const askExperienceLevel = (bot, req) => {
   getState(bot, req).last_question = "experience_level";
 
   sendMessage(bot, getState(bot, req), 'So you want to work for us, huh?', options);
+  setTimeout(() => sendMessage(bot, getState(bot, req), 'http://i.imgur.com/ClzqEPD.jpg', options), 200);
+
   options.reply_markup = buildReplyKeyboardMarkup([
     [{"text": "Internship"}, {"text": "Junior career"}],
     [{"text": "I don't know yet."}]

@@ -1,8 +1,9 @@
 const TelegramBot = require('node-telegram-bot-api');
 
-import { sendMessage } from './actions/sendMessage';
 import { sendChatAction } from './actions/sendChatAction';
+import { sendMessage } from './actions/sendMessage';
 import { sendPhoto } from './actions/sendPhoto';
+import { sendSpam } from './actions/sendSpam';
 import { askBusinessSectorOne, askBusinessSectorTwo } from './actions/askBusinessSector';
 import { askCity } from './actions/askCity';
 import { askExperienceLevel } from './actions/askExperienceLevel';
@@ -42,14 +43,21 @@ const handleMock = (bot, req) => {
     getState(bot, req).start_date = "2016.12.01";
     getState(bot, req).last_question = null;
 
-    askQualifications(bot, req);
+    const options = defaultNextStateOptions();
+    sendMessage(bot, getState(bot, req), "Wow, that's some great enthusiasm you got there!", options);
+
+    setTimeout(() => askQualifications(bot, req), 500);
     return false;
   }
   else if (getState(bot, req).last_question == "qualifications") {
     getState(bot, req).qualifications = "college";
     getState(bot, req).last_question = null;
 
-    askInterestFreetext(bot, req);
+    const options = defaultNextStateOptions();
+    sendMessage(bot, getState(bot, req), "http://i.imgur.com/kQtkfuo.jpg", options);
+    setTimeout(() => sendMessage(bot, getState(bot, req), "I can already see that you'll feel right at home!", options), 200);
+
+    setTimeout(() => askInterestFreetext(bot, req), 500);
     return false;
   }
   else if (getState(bot, req).last_question == "interest_freetext") {
@@ -62,14 +70,21 @@ const handleMock = (bot, req) => {
     setTimeout(() => askSurroundings(bot, req), 1000);
     return false;
   }
-  else if (getState(bot, req).last_question == "surroundings") {
-    getState(bot, req).surroundings = "outside";
+  // else if (getState(bot, req).last_question == "surroundings") {
+  //   getState(bot, req).surroundings = "outside";
+  //   getState(bot, req).last_question = null;
+  //
+  //   sendMessage(bot, getState(bot, req), "Let me see if I can find something for you. Just a sec!", options)
+  //   sendChatAction(bot, getState(bot, req), "typing", options);
+  //   const options = defaultNextStateOptions();
+  //   setTimeout(() => askResults(bot, req), 5000);
+  //   return false;
+  // }
+  else if (getState(bot, req).last_question == "phone") {
+    getState(bot, req).phonenumber = "0101010133";
     getState(bot, req).last_question = null;
 
-    sendMessage(bot, getState(bot, req), "Let me see if I can find something for you. Just a sec!", options)
-    sendChatAction(bot, getState(bot, req), "typing", options);
-    const options = defaultNextStateOptions();
-    setTimeout(() => askResults(bot, req), 5000);
+    sendSpam(bot, req);
     return false;
   }
   return true;
@@ -115,6 +130,27 @@ bot.onText(/.*/, function (req, text) {
         getState(bot, req).last_question = null;
 
         return askCity(bot, req);
+
+      case 'reply_environment':
+        getState(bot, req).environment = parsed.entities.environment[0].value;
+        getState(bot, req).last_question = null;
+
+        switch(getState(bot, req).environment) {
+          case 'people':
+            sendMessage(bot, getState(bot, req), "http://i.imgur.com/nMwT9j6.jpg", options);
+            break;
+          case 'ideas':
+            sendMessage(bot, getState(bot, req), "http://i.imgur.com/mTnMGVv.jpg", options);
+            break;
+          case 'outside':
+            sendMessage(bot, getState(bot, req), "http://i.imgur.com/GjA2K3w.jpg", options);
+            break;
+        }
+
+        setTimeout(() => sendMessage(bot, getState(bot, req), "Let me see if I can find something for you. Just a sec!", options));
+        sendChatAction(bot, getState(bot, req), "typing", options);
+        // const options = defaultNextStateOptions();
+        return setTimeout(() => askResults(bot, req), 5000);
 
       case 'undecided':
         const last_question = getState(bot, req).last_question;
